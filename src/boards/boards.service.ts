@@ -5,12 +5,16 @@ import { Repository } from 'typeorm';
 import { PostCreateDto } from './dto/postCreate.dto';
 import { S3 } from 'aws-sdk';
 import { PostUpdateDto } from './dto/postUpdate.dto';
+import { CommentDto } from './dto/comment.dto';
+import { Comments } from './entities/comments.entity';
 
 @Injectable()
 export class BoardsService {
   constructor(
     @InjectRepository(Posts)
     private readonly boardRepository: Repository<Posts>,
+    @InjectRepository(Comments)
+    private readonly commentRepository: Repository<Comments>,
     @Inject('AWS S3') private readonly s3: S3,
   ) {}
 
@@ -99,6 +103,22 @@ export class BoardsService {
       await this.deleteS3File(post.img);
     }
     await this.boardRepository.delete(postId);
+    return true;
+  }
+
+  async commentUpload(commentData: CommentDto): Promise<Comments> {
+    const newComment = new Comments();
+    newComment.postId = commentData.postId;
+    newComment.writer = commentData.writer;
+    newComment.content = commentData.content;
+
+    const createComment = this.commentRepository.create(newComment);
+    return this.commentRepository.save(createComment);
+  }
+
+  async commentDelete(commentId: number): Promise<boolean> {
+    const comment = await this.commentRepository.findOneBy({ commentId });
+    await this.commentRepository.delete(comment);
     return true;
   }
 }

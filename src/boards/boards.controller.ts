@@ -14,6 +14,8 @@ import { PostCreateDto } from './dto/postCreate.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Posts } from './entities/posts.entity';
 import { PostUpdateDto } from './dto/postUpdate.dto';
+import { CommentDto } from './dto/comment.dto';
+import { Comments } from './entities/comments.entity';
 
 @Controller('boards')
 export class BoardsController {
@@ -51,5 +53,15 @@ export class BoardsController {
   @Delete('/:postId')
   async deletePost(@Param('postId') postId: number): Promise<boolean> {
     return this.boardService.deletePost(postId);
+  }
+
+  @Post('/comment/upload')
+  async commentUpload(@Body() commentData: CommentDto): Promise<Comments> {
+    return this.boardService.commentUpload(commentData);
+  }
+
+  @Delete('/comment/:commentId')
+  async commentDelete(@Param('commentId') commentId: number): Promise<boolean> {
+    return this.boardService.commentDelete(commentId);
   }
 }

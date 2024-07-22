@@ -14,21 +14,29 @@ import { User } from 'src/auth/entities/user.entity';
 export class Posts {
   @PrimaryGeneratedColumn()
   postId: number;
+
   @Column()
   userId: string;
+
   @Column()
   writer: string;
+
   @Column()
   title: string;
+
   @Column()
   content: string;
+
   @Column({ type: 'text' })
   img: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
+
   @OneToMany(() => Comments, (comment) => comment.post)
   @JoinColumn({ name: 'postId', referencedColumnName: 'postId' })
   comments: Comments[];
+
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId', referencedColumnName: 'userId' })
   user: User;

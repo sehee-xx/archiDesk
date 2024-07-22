@@ -22,7 +22,7 @@ export class AuthController {
     const displayName = encodeURIComponent(user.displayName);
     // 클라이언트가 이해할 수 있는 URL로 리다이렉트
     res.redirect(
-      `http://143.248.226.176:3000/?displayName=${displayName}&userId=${userId}`,
+      `http://143.248.226.200:3000/?displayName=${displayName}&userId=${userId}`,
     );
     // res.redirect(`https://archidesk.loca.lt/?displayName=${displayName}`);
   }
