@@ -10,12 +10,10 @@ import { Posts } from './posts.entity';
 
 @Entity()
 export class Comments {
-  @PrimaryGeneratedColumn()
+  @Column()
   postId: number;
-  @Column()
+  @PrimaryGeneratedColumn()
   commentId: number;
-  @Column()
-  userId: string;
   @Column()
   writer: string;
   @Column()
