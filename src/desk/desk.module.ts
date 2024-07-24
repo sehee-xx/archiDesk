@@ -9,5 +9,6 @@ import { AwsModule } from 'src/aws/aws.module';
   imports: [TypeOrmModule.forFeature([Desk]), AwsModule],
   providers: [DeskService],
   controllers: [DeskController],
+  exports: [DeskService],
 })
 export class DeskModule {}

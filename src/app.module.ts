@@ -18,6 +18,8 @@ import { Desk } from './desk/entities/desk.entity';
 import { Monitor } from './monitor/entities/monitor.entity';
 import { Keyboard } from './keyboard/entities/keyboard.entity';
 import { Mouse } from './mouse/entities/mouse.entity';
+import { GeminiModule } from './gemini/gemini.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -40,6 +42,10 @@ import { Mouse } from './mouse/entities/mouse.entity';
     MonitorModule,
     KeyboardModule,
     MouseModule,
+    GeminiModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

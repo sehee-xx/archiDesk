@@ -3,8 +3,8 @@ import { PassportStrategy } from '@nestjs/passport'; // Passport의 특징: 각 
 // 전략이란 Passport에서 특정 인증 방식을 구현하는 모듈임
 // 미들웨어란 다양한 기능을 수행하는 중간 계층 소프트웨어임, 인증을 처리하기 위한 미들웨어는 사용자가 요청을 보낼 때 요청을 가로채고, 인증 절차를 수행하여 사용자가 적절한 권한을 갖는지 확인
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
-import * as dotenv from 'dotenv';
 import { UserService } from '../user.service';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       // PassportStrategy 클래스의 생성자를 호출하여 Google OAuth2 전략을 설정
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'https://archidesk.loca.lt/auth/google/callback',
+      callbackURL: 'http://localhost:3001/auth/google/callback',
       scope: ['email', 'profile'], // 요청할 프로필 범위
     });
   }
