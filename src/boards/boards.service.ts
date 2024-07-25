@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Posts } from './entities/posts.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { PostCreateDto } from './dto/postCreate.dto';
 import { S3 } from 'aws-sdk';
 import { PostUpdateDto } from './dto/postUpdate.dto';
@@ -120,5 +120,23 @@ export class BoardsService {
     const comment = await this.commentRepository.findOneBy({ commentId });
     await this.commentRepository.delete(comment);
     return true;
+  }
+
+  async searchPost(search: string): Promise<Posts[]> {
+    const posts = await this.boardRepository.find({
+      where: [{ title: Like(`%${search}%`) }, { content: Like(`%${search}%`) }],
+    });
+
+    return posts.map((post) => ({
+      postId: post.postId,
+      userId: post.userId,
+      writer: post.writer,
+      title: post.title,
+      content: post.content,
+      img: post.img,
+      created_at: post.created_at,
+      comments: post.comments,
+      user: post.user,
+    }));
   }
 }

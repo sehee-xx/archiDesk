@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -63,5 +64,11 @@ export class BoardsController {
   @Delete('/comment/:commentId')
   async commentDelete(@Param('commentId') commentId: number): Promise<boolean> {
     return this.boardService.commentDelete(commentId);
+  }
+
+  @Get('search')
+  async searchDesk(@Query('q') search: string): Promise<Posts[]> {
+    console.log('쿼리', search);
+    return this.boardService.searchPost(search);
   }
 }

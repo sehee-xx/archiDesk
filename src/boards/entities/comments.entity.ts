@@ -20,7 +20,7 @@ export class Comments {
   content: string;
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
-  @ManyToOne(() => Posts, (post) => post.comments)
+  @ManyToOne(() => Posts, (post) => post.comments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'postId', referencedColumnName: 'postId' })
   post: Posts;
 }

@@ -54,8 +54,6 @@ export class DeskService {
   }
 
   async searchDesk(search: string): Promise<Desk[]> {
-    // 디버깅 로그 추가
-
     const desks = await this.deskRepository.find({
       where: [
         { deskName: Like(`%${search}%`) },

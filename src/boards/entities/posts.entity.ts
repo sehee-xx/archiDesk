@@ -33,7 +33,10 @@ export class Posts {
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
-  @OneToMany(() => Comments, (comment) => comment.post)
+  @OneToMany(() => Comments, (comment) => comment.post, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'postId', referencedColumnName: 'postId' })
   comments: Comments[];
 
